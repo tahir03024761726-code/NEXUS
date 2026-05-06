@@ -45,9 +45,33 @@ TAHIR_USER_ID = int(os.getenv("TAHIR_USER_ID"))
 # Configure Gemini
 genai.configure(api_key=GEMINI_API_KEY)
 
+# Auto-detect best available Gemini model
+GEMINI_MODELS = [
+    "gemini-2.0-flash",
+    "gemini-1.5-flash",
+    "gemini-1.5-pro",
+    "gemini-1.0-pro",
+]
+
+def find_working_model():
+    """Try models in order, return first one that works"""
+    for model_name in GEMINI_MODELS:
+        try:
+            test_model = genai.GenerativeModel(model_name=model_name)
+            test_model.generate_content("test")
+            print(f"[AI] Using model: {model_name}")
+            return model_name
+        except Exception as e:
+            print(f"[AI] Model {model_name} not available: {str(e)[:60]}")
+            continue
+    print("[AI] FALLBACK: Using gemini-1.5-flash")
+    return "gemini-1.5-flash"
+
+ACTIVE_MODEL = find_working_model()
+
 # Aryan model (professional)
 aryan_model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash",
+    model_name=ACTIVE_MODEL,
     system_instruction=ARYAN_SYSTEM_PROMPT,
     generation_config={
         "temperature": 0.9,
@@ -58,7 +82,7 @@ aryan_model = genai.GenerativeModel(
 
 # Saba model (emotional)
 saba_model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash",
+    model_name=ACTIVE_MODEL,
     system_instruction=SABA_SYSTEM_PROMPT,
     generation_config={
         "temperature": 1.0,
