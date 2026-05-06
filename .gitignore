@@ -1,0 +1,36 @@
+# Environment
+.env
+venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Audio/Image temp files
+*.mp3
+*.ogg
+*.wav
+*.jpg
+*.png
+!test_*.mp3
+
+# Memory & logs
+memory.json
+logs/
+temp/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
