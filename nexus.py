@@ -47,7 +47,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 # Aryan model (professional)
 aryan_model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash-exp",
+    model_name="gemini-2.0-flash",
     system_instruction=ARYAN_SYSTEM_PROMPT,
     generation_config={
         "temperature": 0.9,
@@ -58,7 +58,7 @@ aryan_model = genai.GenerativeModel(
 
 # Saba model (emotional)
 saba_model = genai.GenerativeModel(
-    model_name="gemini-2.0-flash-exp",
+    model_name="gemini-2.0-flash",
     system_instruction=SABA_SYSTEM_PROMPT,
     generation_config={
         "temperature": 1.0,
